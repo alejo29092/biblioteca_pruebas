@@ -6,8 +6,8 @@ class Libro:
    
 
     def __init__(self, autor: Autor, nombre: str, pais: str):
-        self._id = self._seq_Libro
-        Libro.seq_Libro += 1
+       # self._id = self._seq_Libro
+        #Libro.seq_Libro += 1
         
         self._nombre = nombre
         self._pais = pais
@@ -16,6 +16,8 @@ class Libro:
         
     def getNombre (self):
         return self._nombre
+    
+    
     
 
     def getInfoLibro(self):
