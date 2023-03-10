@@ -64,6 +64,8 @@ class Biblioteca:
 
     def _verificar_existencia_autor(self, nombre_autor):
         """
+        Está función revisa si el nombre del autor se encuentra en la lista _autores
+        y en caso de que no lo esté pide registrarlo
 
         """
         for Autor.nombre in self._autores:
@@ -72,10 +74,15 @@ class Biblioteca:
                 self.Autor.nombre = input('pon el nombre común del autor: ')
                 self.nacionalidad = input('pon la nacionalidad del autor: ')
                 self._nacionalidad = nacionalidad
+                self._guardar_autores()
             else:
                 pass
 
     def _cargar_autores(self):
+        """
+        Carga los autores guardados en la lista
+        _autores
+        """
         with  open(self._ruta_autores, "ab+") as archivo_autores:
             archivo_autores.seek(0)
             try:
@@ -86,6 +93,10 @@ class Biblioteca:
                 print(f"Error -> {e}")
 
     def _guardar_autores(self):
+        """"
+        Agrega el nuevo autor a la lista _autores y lo carga en el documento
+        de los autores
+        """
         Archivo = open(self._ruta_autores, "ab")
         pickle.dump(self._autores, Archivo)
         Archivo.close
@@ -93,6 +104,8 @@ class Biblioteca:
 
     def _cargar_libros(self):
         """"
+        Carga los libros guardados en la lista
+        _libros
 
         """
 
@@ -109,6 +122,8 @@ class Biblioteca:
 
     def _cargar_estudiantes(self):
         """"
+          Carga los autores guardados en la lista
+        _estudiantes
 
         """
         with open(self._ruta_estudiantes,
@@ -122,6 +137,10 @@ class Biblioteca:
                 print("No se han cargado libros previos")
                 print(f"Error -> {e}")
     def _cargar_prestados(self):
+        """"
+        Carga los libros que están prestados en la siguiente lista
+        _libros_prestados
+        """
         with open(self._ruta_prestados,
                   "ab+") as archivo_prestados:  # TODO: Asegurarse de que "ab+" sea el correcto para leer
             archivo_prestados.seek(0)
