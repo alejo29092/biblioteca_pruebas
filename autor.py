@@ -21,14 +21,7 @@ class Autor():
         self._nombre = nombre
         
     def autor_verificar(self, nombre):
-        for nombre in LibrosGuardados:
-            if nombre != LibrosGuardados.autor:
-                print("El autor del libro no estaba registrado, por lo cual lo debes registrar")
-                self.Autor.nombre = input('pon el nombre común del autor: ')
-                self.nacionalidad = input('pon la nacionalidad del autor: ')
-                self._nacionalidad = nacionalidad
-            else:
-                pass
+
 
             
     def __str__(self):

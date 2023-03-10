@@ -18,6 +18,8 @@ class Biblioteca:
 
     _ruta_autores = "persistencia_autores"
     _ruta_libros = "persistencia_libros"
+    _ruta_estudiantes = "persistencia_estudiantes"
+    _ruta_prestados = "persistencia_prestamos"
 
     def __init__(self, nombre: str):
         self._nombre = nombre
@@ -55,8 +57,8 @@ class Biblioteca:
 
         Libros = Libro
         Libros.autor = input('introduce el autor: ')
-        Libros.nombre=input('introduce el nombre del libro: ')
-        Libros.pais=input('introduce el pais de origen del libro: ')
+        Libros.nombre = input('introduce el nombre del libro: ')
+        Libros.pais = input('introduce el pais de origen del libro: ')
         self.AgregarLibro(Libros)
         self.GuardarLibros()
 
@@ -64,33 +66,71 @@ class Biblioteca:
         """
 
         """
+        for Autor.nombre in self._autores:
+            if nombre != LibrosGuardados.autor:
+                print("El autor del libro no estaba registrado, por lo cual lo debes registrar")
+                self.Autor.nombre = input('pon el nombre común del autor: ')
+                self.nacionalidad = input('pon la nacionalidad del autor: ')
+                self._nacionalidad = nacionalidad
+            else:
+                pass
 
     def _cargar_autores(self):
-        ArchivoId = open(self.Ruta2, "ab+")
-        ArchivoId.seek(0)
-        try:
-            self.GuardadosId = pickle.load(ArchivoId)
+        with  open(self._ruta_autores, "ab+") as archivo_autores:
+            archivo_autores.seek(0)
+            try:
+                self._autores = pickle.load(archivo_autores)
 
-        finally:
-            del ArchivoId
-        self._id = self._seq_Libro
-        Libro._seq_Libro += 1
-        Archivo = open(self.Ruta2, "ab")
-        pickle.dump(self.LibrosId, Archivo)
+            except EOFError as e:
+                print("No se han cargado libros previos")
+                print(f"Error -> {e}")
+
+    def _guardar_autores(self):
+        Archivo = open(self._ruta_autores, "ab")
+        pickle.dump(self._autores, Archivo)
         Archivo.close
         del Archivo
 
     def _cargar_libros(self):
+        """"
 
-            with open(self._ruta_libros, "ab+") as archivo_libros: # TODO: Asegurarse de que "ab+" sea el correcto para leer
-                archivo_libros.seek(0)
+        """
 
-                try:
-                    self._libros = pickle.load(archivo_libros)
-                    print(f"{len(self._libros)} libros cargados ")
-                except EOFError as e:
-                    print("No se han cargado libros previos")
-                    print(f"Error -> {e}")
+        with open(self._ruta_libros,
+                  "ab+") as archivo_libros:  # TODO: Asegurarse de que "ab+" sea el correcto para leer
+            archivo_libros.seek(0)
 
+            try:
+                self._libros = pickle.load(archivo_libros)
+                print(f"{len(self._libros)} libros cargados ")
+            except EOFError as e:
+                print("No se han cargado libros previos")
+                print(f"Error -> {e}")
+
+    def _cargar_estudiantes(self):
+        """"
+
+        """
+        with open(self._ruta_estudiantes,
+                  "ab+") as archivo_estudiantes:  # TODO: Asegurarse de que "ab+" sea el correcto para leer
+            archivo_estudiantes.seek(0)
+
+            try:
+                self._estudiantes = pickle.load(archivo_estudiantes)
+                print(f"{len(self._estudiantes)} libros cargados ")
+            except EOFError as e:
+                print("No se han cargado libros previos")
+                print(f"Error -> {e}")
+    def _cargar_prestados(self):
+        with open(self._ruta_prestados,
+                  "ab+") as archivo_prestados:  # TODO: Asegurarse de que "ab+" sea el correcto para leer
+            archivo_prestados.seek(0)
+
+            try:
+                self._libros = pickle.load(archivo_prestados)
+                print(f"{len(self._libros_prestados)} libros cargados ")
+            except EOFError as e:
+                print("No se han cargado libros previos")
+                print(f"Error -> {e}")
 
 
