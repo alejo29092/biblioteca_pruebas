@@ -14,3 +14,9 @@ Se puede consultar en la biblioteca los libros de un pais (se puede buscar por N
 Se debe permitir agregar nuevos libros, nuevos autores o nuevos usuarios (o estudiante)
 ## BONUS:
 Hacer que los datos se persistan, es decir que si se Vuelve a ejecutar la aplicación se carguen todos los datos como quedó la ultima vez que se corrió la app
+
+
+# Ejecucion de la app
+´´´bash
+python3 main.py
+´´´
