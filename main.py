@@ -1,6 +1,5 @@
 from autor import ListaDeLibros
-
-LlamarLibro = ListaDeLibros()
+from biblioteca import Biblioteca
 
 
 def menu():
@@ -22,13 +21,20 @@ def menu():
         print('5.) Bucar un autor')
         print('6.) Mostrar libros')
         print('7.) Salir')
+
+        # TODO: falta agregar la funcion de agregar un autor
+        # TODO: falta agregar la funcion de buscar libro por nombre
+        # TODO: falta agregar la funcion de buscar libro por nombre de autor
+
+        biblioteca = Biblioteca('Biblioteca Parque Educativo')
+
         seleccionar = int(input('Elige una opcion: '))
         if seleccionar == 1:
-            biblioteca.RegistrarLibro()
+            biblioteca.registrar_libro()
         elif seleccionar == 2:
-            biblioteca.RegistarEstudiante()
+            biblioteca.registar_estudiante()
         elif seleccionar == 3:
-            biblioteca.BuscarLibroId()
+            biblioteca.buscar_libro_por_id()
         elif seleccionar == 4:
             BuscarEstudiante()
         elif seleccionar == 5:

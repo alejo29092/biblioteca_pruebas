@@ -4,92 +4,93 @@ Created on Mon Feb 20 12:40:14 2023
 
 @author: alejo
 """
-
-from libro import Libro
-from libro import ListaDeLibros
-from Prestamo import Prestamos
-from Estudiante import Estudiante
-from libro import RegistarLibro
+import pickle
 
 
-class Biblioteca():
+class Biblioteca:
     """
     Esta 
     """
-    _seq_Biblioteca = 0
-   
-    
-    def __init__(self, libro:Libro,nombre:str, prestamo:Prestamos):
-        self._id = self._seq_Biblioteca
-        Biblioteca._seq_Biblioteca +=1
-        
-        self._libro = (libro)
-        self._nombre = (nombre)
-        #self._repositorio = RegistrarLibro
-    
+    _libros = []
+    _libros_prestados = []
+    _autores = []
+    _estudiantes = []
 
-LlamarLibro = ListaDeLibros()
-def menu():
-    """
-    da un menu de opciones y sus respectivors numeros para
-    ser usada
-    """
-    seleccionar = 0
-    while seleccionar !=7:
-        
-        print('Bienvenido al menú de la biblioteca')
-        print('Primera versión 1.0')
-        print('Elige una de las opciones')
-        print('-----------------------------------------')
-        print('1.) Registar un libro')
-        print('2.) Registar un estudiante')
-        print('3.) Buscar un libro por su id')
-        print('4.) Buscar un estudiante')
-        print('5.) Bucar un autor')
-        print('6.) Mostrar libros')
-        print('7.) Salir')
-        seleccionar= int(input('Elige una opcion: '))
-        if seleccionar ==1:
-            LlamarLibro.RegistrarLibro()
-        elif seleccionar ==2:
-            RegistarEstudiante()
-        elif seleccionar == 3: 
-            LlamarLibro.BuscarLibroId()
-        elif seleccionar == 4:
-            BuscarEstudiante()
-        elif seleccionar == 5:
-            BuscarAutor()
-        elif seleccionar == 6:
-            MostrarLibros()
-        print('---------------------------------------')
+    _ruta_autores = "persistencia_autores"
+    _ruta_libros = "persistencia_libros"
 
-libros = Libro
+    def __init__(self, nombre: str):
+        self._nombre = nombre
+        self._cargar_autores()
+        self._cargar_libros()
+        self._cargar_estudiantes()
+        self._cargar_prestamos()
 
-    
-def RegistarEstudiante():
-    estudiantes = Estudiante()
-    estudiantes.nombre = input('introduce el nombre del estudiante')
-    
-    
+    def get_nombre(self):
+        return self._nombre
 
-            
-def BuscarEstudiante():
-    print('x')
-        
-def BuscarAutor():
-    id_libro = int(input('ingresar id del libro a buscar'))
-    for ibros in listas :
-        if libros.autor == id_libro:
-            print(libros.nombre,',', ',',libros.autor,',', libros.pais)
-        
-        
-def MostrarLibros():
-    print(ListaDeLibros.MostrarLibroGuardado())
+    def buscar_libro_por_nombre(self, nombre: str):
+        """
+        Retorna un libro si lo encuentra en repositorio de la Biblioteca usando el nombre para buscarlo
+        :param: nombre: str, string que contiene nombre del librop para ser bucado
+        :return: Libro si el libro existe de lo contrario None
+        """
+        pass
 
-  
+    def buscar_libro_por_autor(self, nombre_de_autor):
+        """
+
+        """
+        pass
+
+    def registrar_libro(self):
+        """
+        esta funcion puede ser llamada para crear un nuevo libro
+        y en caso de que el autor no este registrado, crearlo
+
+        """
+        nombre_autor = input('pon el nombre del autor ')
+
+        self._verificar_existencia_autor(nombre_autor)
+
+        Libros = Libro
+        Libros.autor = input('introduce el autor: ')
+        Libros.nombre=input('introduce el nombre del libro: ')
+        Libros.pais=input('introduce el pais de origen del libro: ')
+        self.AgregarLibro(Libros)
+        self.GuardarLibros()
+
+    def _verificar_existencia_autor(self, nombre_autor):
+        """
+
+        """
+
+    def _cargar_autores(self):
+        ArchivoId = open(self.Ruta2, "ab+")
+        ArchivoId.seek(0)
+        try:
+            self.GuardadosId = pickle.load(ArchivoId)
+
+        finally:
+            del ArchivoId
+        self._id = self._seq_Libro
+        Libro._seq_Libro += 1
+        Archivo = open(self.Ruta2, "ab")
+        pickle.dump(self.LibrosId, Archivo)
+        Archivo.close
+        del Archivo
+
+    def _cargar_libros(self):
+
+            with open(self._ruta_libros, "ab+") as archivo_libros: # TODO: Asegurarse de que "ab+" sea el correcto para leer
+                archivo_libros.seek(0)
+
+                try:
+                    self._libros = pickle.load(archivo_libros)
+                    print(f"{len(self._libros)} libros cargados ")
+                except EOFError as e:
+                    print("No se han cargado libros previos")
+                    print(f"Error -> {e}")
 
 
-menu()
-        
-        
-        
+
