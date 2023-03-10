@@ -17,6 +17,6 @@ Hacer que los datos se persistan, es decir que si se Vuelve a ejecutar la aplica
 
 
 # Ejecucion de la app
-´´´bash
+```bash
 python3 main.py
-´´´
+```
