@@ -44,11 +44,8 @@ class Biblioteca:
         """
         pass
 
-    def buscar_libro_por_autor(self, nombre_de_autor):
-        """
 
-        """
-        pass
+
 
     def registrar_libro(self):
         """
@@ -124,6 +121,18 @@ class Biblioteca:
                 self._autores = []
                 pickle.dump(self._autores, archivo_autores)
 
+    def _guardar_autor(self, autor: Autor):
+        self._autores.append(autor)
+        self._guardar_autores_repo()
+
+    def _guardar_autores_repo(self):
+        """"
+        Agrega el nuevo autor a la lista _autores y lo carga en el documento
+        de los autores
+        """
+        with open(self._ruta_autores, "wb") as archivo:
+            pickle.dump(self._autores, archivo)
+
     def _cargar_libros(self):
         """"
         Carga los libros guardados en la lista
@@ -144,18 +153,6 @@ class Biblioteca:
                 self._libros = []
                 pickle.dump(self._libros, archivo_libros)
 
-    def _guardar_autor(self, autor: Autor):
-        self._autores.append(autor)
-        self._guardar_autores_repo()
-
-    def _guardar_autores_repo(self):
-        """"
-        Agrega el nuevo autor a la lista _autores y lo carga en el documento
-        de los autores
-        """
-        with open(self._ruta_autores, "wb") as archivo:
-            pickle.dump(self._autores, archivo)
-
     def _guardar_libro(self, libro: Libro):
         self._libros.append(libro)
         self._guardar_libros_repo()
@@ -164,38 +161,57 @@ class Biblioteca:
         with open(self._ruta_libros, "wb") as archivo:
             pickle.dump(self._libros, archivo)
 
+
+    def buscar_libro_por_autor(self, nombre_autor)->Libro:
+        """
+
+        """
+        nombre_autor.title()
+        for i in self._libros:
+            if nombre_autor == Libro._autor:
+                print(f"{Libro._nombre},")
+
+
+
+
     def _cargar_estudiantes(self):
         """"
           Carga los autores guardados en la lista
         _estudiantes
 
         """
-        with open(self._ruta_estudiantes,
-                  "ab+") as archivo_estudiantes:  # TODO: Asegurarse de que "ab+" sea el correcto para leer
-            archivo_estudiantes.seek(0)
-
-            try:
+        try:
+            print("Cargando Libros desde disco")
+            with open(Biblioteca._ruta_estudiantes, "rb") as archivo_estudiantes:
                 self._estudiantes = pickle.load(archivo_estudiantes)
-                print(f"{len(self._estudiantes)} libros cargados ")
-            except EOFError as e:
-                print("No se han cargado libros previos")
-                print(f"Error -> {e}")
+            print(f"{len(self._estudiantes)} libros cargados ")
+        except EOFError as e:
+            print("No se han cargado libros previos")
+            print(f"Error -> {e}")
+        except (IOError, OSError):
+            print("Creando un archivo para repo de libros ya que no existia")
+            with open(Biblioteca._ruta_estudiantes, "wb") as archivo_estudiantes:
+                self._estudiantes = []
+                pickle.dump(self._estudiantes, archivo_estudiantes)
 
     def _cargar_prestados(self):
         """"
         Carga los libros que están prestados en la siguiente lista
         _libros_prestados
         """
-        with open(self._ruta_prestados,
-                  "ab+") as archivo_prestados:  # TODO: Asegurarse de que "ab+" sea el correcto para leer
-            archivo_prestados.seek(0)
-
-            try:
-                self._libros = pickle.load(archivo_prestados)
-                print(f"{len(self._libros_prestados)} libros cargados ")
-            except EOFError as e:
-                print("No se han cargado libros previos")
-                print(f"Error -> {e}")
+        try:
+            print("Cargando Libros desde disco")
+            with open(Biblioteca._ruta_prestados, "rb") as archivo_prestados:
+                self._libros_prestados = pickle.load(archivo_prestados)
+            print(f"{len(self._libros_prestados)} libros cargados ")
+        except EOFError as e:
+            print("No se han cargado libros previos")
+            print(f"Error -> {e}")
+        except (IOError, OSError):
+            print("Creando un archivo para repo de libros ya que no existia")
+            with open(Biblioteca._ruta_prestados, "wb") as archivo_prestados:
+                self._libros_prestados = []
+                pickle.dump(self._libros_prestados, archivo_prestados)
 
     def _cargar_prestamos(self):
         pass

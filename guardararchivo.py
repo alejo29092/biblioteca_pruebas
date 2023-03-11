@@ -50,7 +50,16 @@ LibrosPosesion.append(libros)
 #         Archivo.close
 #         del Archivo
 #
+#        with open(self._ruta_prestados,
+#                  "ab+") as archivo_prestados:  # TODO: Asegurarse de que "ab+" sea el correcto para leer
+ #           archivo_prestados.seek(0)
 #
+#            try:
+   #             self._libros = pickle.load(archivo_prestados)
+  #              print(f"{len(self._libros_prestados)} libros cargados ")
+ #           except EOFError as e:
+#                print("No se han cargado libros previos")
+#                print(f"Error -> {e}")
 # """"for libros in self.librosGuardados :
 #             if libros.autor == :
 #                 print(libros.nombre,',', ',',libros.autor,',', libros.pais)

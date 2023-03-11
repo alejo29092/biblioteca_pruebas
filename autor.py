@@ -14,7 +14,7 @@ class Autor:
         """
         self._id = Autor._seq_id
         Autor._seq_id += 1
-        self._nombre = nombre
+        self._nombre = nombre.title()
 
     def autor_verificar(self, nombre):
         pass

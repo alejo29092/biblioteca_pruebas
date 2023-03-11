@@ -7,19 +7,25 @@ def menu():
     ser usada
     """
     seleccionar = 0
-    while seleccionar != 7:
+    while seleccionar != 12:
 
         print('Bienvenido al menú de la biblioteca')
         print('Primera versión 1.0')
         print('Elige una de las opciones')
-        print('-----------------------------------------')
+        print('-'*40)
         print('1.) Registar un libro')
         print('2.) Registar un estudiante')
-        print('3.) Buscar un libro por su id')
-        print('4.) Buscar un estudiante')
-        print('5.) Bucar un autor')
-        print('6.) Mostrar libros')
-        print('7.) Salir')
+        print('3.) Buscar un libro por su nombre')
+        print('4.) Bucar libro por el nombre del autor')
+        print('5.) Buscar un estudiante')
+        print('6.) Bucar un autor')
+        print('7.) Mostrar todos los libros')
+        print('8.) Pedir un libro prestado')
+        print('9.) devolver un libro ')
+        print('10.) Cuantos ejemplares hay de cada libro')
+        print('11.) Cuantos ejemplares hay prestados ')
+
+        print('12.) Salir')
 
         # TODO: falta agregar la funcion de agregar un autor
         # TODO: falta agregar la funcion de buscar libro por nombre
@@ -35,14 +41,29 @@ def menu():
         elif seleccionar == 2:
             biblioteca.registar_estudiante()
         elif seleccionar == 3:
-            biblioteca.buscar_libro_por_id()
-        # elif seleccionar == 4:
-        #     BuscarEstudiante()
+            libro_buscar= input('pon el nombre del autor')
+            biblioteca.buscar_libro_por_id(libro_buscar)
+        elif seleccionar == 4:
+             autores_filtrar = input('pon el nombre del autor')
+             biblioteca.bucar_libro_por_autor(autores_filtrar)
         # elif seleccionar == 5:
-        #     BuscarAutor()
-        elif seleccionar == 6:
+        #     biblioteca.()
+        # elif seleccionar ==
+        elif seleccionar == 7:
             biblioteca.mostrar_libros()
-        print('---------------------------------------')
+        #
+        # elif seleccionar == 7:
+        #     biblioteca.()
+        # elif seleccionar == 8:
+        # biblioteca.()
+        # elif seleccionar == 9:
+        #     biblioteca.()
+        # elif seleccionar == 10:
+        #     biblioteca.()
+        # elif seleccionar ==11:
+        #     biblioteca.()
+
+        print('-'*40)
 
 
 # def RegistarEstudiante():
