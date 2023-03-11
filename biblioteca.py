@@ -5,23 +5,28 @@ Created on Mon Feb 20 12:40:14 2023
 @author: alejo
 """
 import pickle
+from collections import deque
+
+from autor import Autor
+from libro import Libro
 
 
 class Biblioteca:
     """
     Esta 
     """
-    _libros = []
-    _libros_prestados = []
-    _autores = []
-    _estudiantes = []
 
-    _ruta_autores = "persistencia_autores"
-    _ruta_libros = "persistencia_libros"
-    _ruta_estudiantes = "persistencia_estudiantes"
-    _ruta_prestados = "persistencia_prestamos"
+    _ruta_autores = "persistencia_autores.repo"
+    _ruta_libros = "persistencia_libros.repo"
+    _ruta_estudiantes = "persistencia_estudiantes.repo"
+    _ruta_prestados = "persistencia_prestamos.repo"
 
     def __init__(self, nombre: str):
+        self._libros = []
+        self._libros_prestados = []
+        self._autores = []
+        self._estudiantes = []
+
         self._nombre = nombre
         self._cargar_autores()
         self._cargar_libros()
@@ -51,56 +56,73 @@ class Biblioteca:
         y en caso de que el autor no este registrado, crearlo
 
         """
-        nombre_autor = input('pon el nombre del autor ')
+        nombre_autor = input('Pon el nombre del autor ')
 
-        self._verificar_existencia_autor(nombre_autor)
+        autor_existe = self._verificar_existencia_autor(nombre_autor)
 
-        Libros = Libro
-        Libros.autor = input('introduce el autor: ')
-        Libros.nombre = input('introduce el nombre del libro: ')
-        Libros.pais = input('introduce el pais de origen del libro: ')
-        self.AgregarLibro(Libros)
-        self.GuardarLibros()
+        if autor_existe:
+            autor = self._get_autor(nombre_autor)
+        else:
+            autor = self._crear_autor(nombre_autor)
 
-    def _verificar_existencia_autor(self, nombre_autor):
+        nombre_libro = input("Ingresa el nombre del Libro: ")
+        pais_libro = input("Ingresa el Pais del Libro: ")
+
+        nuevo_libro = Libro(nombre=nombre_libro, autor=autor, pais=pais_libro)
+
+        self._guardar_libro(nuevo_libro)
+
+    def _verificar_existencia_autor(self, nombre_autor) -> bool:
         """
         Está función revisa si el nombre del autor se encuentra en la lista _autores
         y en caso de que no lo esté pide registrarlo
 
         """
-        for Autor.nombre in self._autores:
-            if nombre != LibrosGuardados.autor:
-                print("El autor del libro no estaba registrado, por lo cual lo debes registrar")
-                self.Autor.nombre = input('pon el nombre común del autor: ')
-                self.nacionalidad = input('pon la nacionalidad del autor: ')
-                self._nacionalidad = nacionalidad
-                self._guardar_autores()
-            else:
-                pass
+        for autor in self._autores:
+            if nombre_autor.lower() == autor.get_nombre().lower():
+                return True
+        return False
+
+    def _get_autor(self, nombre_autor) -> Autor:
+        """
+        Dado un nombre busca un autor en selkf._autores y lo retorna como una Autor
+        """
+        # autor_encontrado = None
+        # for autor in self._autores:
+        #     if autor.get_nombre() == nombre_autor:
+        #         autor_encontrado = autor
+        #         break
+
+        autores = list(filter(lambda autor: autor.get_nombre() == nombre_autor, self._autores))
+
+        if autores:
+            return autores[0]
+        else:
+            None
+
+    def _crear_autor(self, nombre):
+        autor = Autor(nombre=nombre)
+        self._guardar_autor(autor)
+        return autor
 
     def _cargar_autores(self):
         """
         Carga los autores guardados en la lista
         _autores
         """
-        with  open(self._ruta_autores, "ab+") as archivo_autores:
-            archivo_autores.seek(0)
-            try:
+        try:
+            print("Cargando Autores desde disco")
+            with open(Biblioteca._ruta_autores, "rb") as archivo_autores:
                 self._autores = pickle.load(archivo_autores)
-
-            except EOFError as e:
-                print("No se han cargado libros previos")
-                print(f"Error -> {e}")
-
-    def _guardar_autores(self):
-        """"
-        Agrega el nuevo autor a la lista _autores y lo carga en el documento
-        de los autores
-        """
-        Archivo = open(self._ruta_autores, "ab")
-        pickle.dump(self._autores, Archivo)
-        Archivo.close
-        del Archivo
+            print(f"{len(self._autores)} Autores cargados ")
+        except EOFError as e:
+            print("No se han cargado autores previos")
+            print(f"Error -> {e}")
+        except (IOError, OSError):
+            print("Creando un archivo para repo de autores ya que no existia")
+            with open(Biblioteca._ruta_autores, "wb") as archivo_autores:
+                self._autores = []
+                pickle.dump(self._autores, archivo_autores)
 
     def _cargar_libros(self):
         """"
@@ -108,17 +130,39 @@ class Biblioteca:
         _libros
 
         """
-
-        with open(self._ruta_libros,
-                  "ab+") as archivo_libros:  # TODO: Asegurarse de que "ab+" sea el correcto para leer
-            archivo_libros.seek(0)
-
-            try:
+        try:
+            print("Cargando Libros desde disco")
+            with open(Biblioteca._ruta_libros, "rb") as archivo_libros:
                 self._libros = pickle.load(archivo_libros)
-                print(f"{len(self._libros)} libros cargados ")
-            except EOFError as e:
-                print("No se han cargado libros previos")
-                print(f"Error -> {e}")
+            print(f"{len(self._libros)} libros cargados ")
+        except EOFError as e:
+            print("No se han cargado libros previos")
+            print(f"Error -> {e}")
+        except (IOError, OSError):
+            print("Creando un archivo para repo de libros ya que no existia")
+            with open(Biblioteca._ruta_libros, "wb") as archivo_libros:
+                self._libros = []
+                pickle.dump(self._libros, archivo_libros)
+
+    def _guardar_autor(self, autor: Autor):
+        self._autores.append(autor)
+        self._guardar_autores_repo()
+
+    def _guardar_autores_repo(self):
+        """"
+        Agrega el nuevo autor a la lista _autores y lo carga en el documento
+        de los autores
+        """
+        with open(self._ruta_autores, "wb") as archivo:
+            pickle.dump(self._autores, archivo)
+
+    def _guardar_libro(self, libro: Libro):
+        self._libros.append(libro)
+        self._guardar_libros_repo()
+
+    def _guardar_libros_repo(self):
+        with open(self._ruta_libros, "wb") as archivo:
+            pickle.dump(self._libros, archivo)
 
     def _cargar_estudiantes(self):
         """"
@@ -136,6 +180,7 @@ class Biblioteca:
             except EOFError as e:
                 print("No se han cargado libros previos")
                 print(f"Error -> {e}")
+
     def _cargar_prestados(self):
         """"
         Carga los libros que están prestados en la siguiente lista
@@ -152,4 +197,24 @@ class Biblioteca:
                 print("No se han cargado libros previos")
                 print(f"Error -> {e}")
 
+    def _cargar_prestamos(self):
+        pass
 
+    def mostrar_libros(self):
+        """
+
+        """
+        print('-' * 100)
+        print('Libros de la Biblioteca : ')
+
+        if self._libros:
+            deque(map(print, self._libros))
+            # print(self._libros)
+        else:
+            print("No hay libros en la Biblioteca")
+
+        print('-' * 100)
+        print('-' * 100)
+
+    def __str__(self):
+        return f"Biblioteca(nombre: {self._nombre}, nro_libros: {len(self._libros)})"

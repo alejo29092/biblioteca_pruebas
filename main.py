@@ -1,4 +1,3 @@
-from autor import ListaDeLibros
 from biblioteca import Biblioteca
 
 
@@ -28,6 +27,8 @@ def menu():
 
         biblioteca = Biblioteca('Biblioteca Parque Educativo')
 
+        print(biblioteca)
+
         seleccionar = int(input('Elige una opcion: '))
         if seleccionar == 1:
             biblioteca.registrar_libro()
@@ -35,38 +36,34 @@ def menu():
             biblioteca.registar_estudiante()
         elif seleccionar == 3:
             biblioteca.buscar_libro_por_id()
-        elif seleccionar == 4:
-            BuscarEstudiante()
-        elif seleccionar == 5:
-            BuscarAutor()
+        # elif seleccionar == 4:
+        #     BuscarEstudiante()
+        # elif seleccionar == 5:
+        #     BuscarAutor()
         elif seleccionar == 6:
-            MostrarLibros()
+            biblioteca.mostrar_libros()
         print('---------------------------------------')
 
 
-libros = Libro
-
-
-def RegistarEstudiante():
-    estudiantes = Estudiante()
-    estudiantes.nombre = input('introduce el nombre del estudiante')
-
-
-def BuscarEstudiante():
-    print('x')
-
-
-def BuscarAutor():
-    id_libro = int(input('ingresar id del libro a buscar'))
-    for ibros in listas:
-        if libros.autor == id_libro:
-            print(libros.nombre, ',', ',', libros.autor, ',', libros.pais)
-
-
-def MostrarLibros():
-    print(ListaDeLibros.MostrarLibroGuardado())
-
-
+# def RegistarEstudiante():
+#     estudiantes = Estudiante()
+#     estudiantes.nombre = input('introduce el nombre del estudiante')
+#
+#
+# def BuscarEstudiante():
+#     print('x')
+#
+#
+# def BuscarAutor():
+#     id_libro = int(input('ingresar id del libro a buscar'))
+#     for ibros in listas:
+#         if libros.autor == id_libro:
+#             print(libros.nombre, ',', ',', libros.autor, ',', libros.pais)
+#
+#
+# def MostrarLibros():
+#     print(ListaDeLibros.MostrarLibroGuardado())
+#
 
 
 if __name__ == '__main__':
