@@ -3,8 +3,7 @@ from biblioteca import Biblioteca
 
 def menu():
     """
-    da un menu de opciones y sus respectivors numeros para
-    ser usada
+    da un menu de opciones y sus respectivors numeros para ser usada
     """
     seleccionar = 0
     while seleccionar != 12:
@@ -12,7 +11,7 @@ def menu():
         print('Bienvenido al menú de la biblioteca')
         print('Primera versión 1.0')
         print('Elige una de las opciones')
-        print('-'*40)
+        print('-' * 40)
         print('1.) Registar un libro')
         print('2.) Registar un estudiante')
         print('3.) Buscar un libro por su nombre')
@@ -39,19 +38,24 @@ def menu():
         if seleccionar == 1:
             biblioteca.registrar_libro()
         elif seleccionar == 2:
-            biblioteca.registar_estudiante()
+            estudiante_registrar = input('pon el nombre del estudiante a registrar')
+            biblioteca.registar_estudiante(estudiante_registrar)
         elif seleccionar == 3:
-            libro_buscar= input('pon el nombre del autor')
+            libro_buscar = input('pon el nombre del autor')
             biblioteca.buscar_libro_por_nombre(libro_buscar)
         elif seleccionar == 4:
-             autores_filtrar = input('pon el nombre del autor')
-             biblioteca.bucar_libro_por_autor(autores_filtrar)
-         elif seleccionar == 5:
-             biblioteca.()
-        # elif seleccionar ==
+            autores_filtrar = input('pon el nombre del autor')
+            biblioteca.buscar_libro_por_autor(autores_filtrar)
+        elif seleccionar == 5:
+            estudiante_buscar = input('pon el nombre del estudiante a buscar')
+            biblioteca.buscar_estudiante(estudiante_buscar)
+        elif seleccionar == 6:
+            autor_buscar = input('pon el nombre del autor')
+            biblioteca.verificar_existencia_autor(autor_buscar)
+
         elif seleccionar == 7:
             biblioteca.mostrar_libros()
-        #
+
         # elif seleccionar == 7:
         #     biblioteca.()
         # elif seleccionar == 8:
@@ -63,7 +67,7 @@ def menu():
         # elif seleccionar ==11:
         #     biblioteca.()
 
-        print('-'*40)
+        print('-' * 40)
 
 
 # def RegistarEstudiante():

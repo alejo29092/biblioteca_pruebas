@@ -12,9 +12,9 @@ class Estudiante:
     def __init__(self, nombre: str):
         self._id = self._seq_Libro
         self._seq_Libro += 1
-        self._nombre = nombre
+        self._nombre = nombre.title()
 
-    def getNombreEstudiante(self):
+    def get_nombre_estudiante(self):
         return self._nombre
 
     def RegistarEstudiante():

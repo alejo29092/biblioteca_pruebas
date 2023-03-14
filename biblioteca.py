@@ -6,14 +6,14 @@ Created on Mon Feb 20 12:40:14 2023
 """
 import pickle
 from collections import deque
-
+from Estudiante import Estudiante
 from autor import Autor
 from libro import Libro
 
 
 class Biblioteca:
     """
-    Esta 
+    Esta es la clase que lleva la mayoria de funciones de la aplicación
     """
 
     _ruta_autores = "persistencia_autores.repo"
@@ -36,42 +36,20 @@ class Biblioteca:
     def get_nombre(self):
         return self._nombre
 
-    def registrar_libro(self):
-        """
-        esta funcion puede ser llamada para crear un nuevo libro
-        y en caso de que el autor no este registrado, crearlo
-
-        """
-        nombre_autor = input('Pon el nombre del autor ')
-
-        autor_existe = self._verificar_existencia_autor(nombre_autor)
-
-        if autor_existe:
-            autor = self._get_autor(nombre_autor)
-        else:
-            autor = self._crear_autor(nombre_autor)
-
-        nombre_libro = input("Ingresa el nombre del Libro: ")
-        pais_libro = input("Ingresa el Pais del Libro: ")
-
-        nuevo_libro = Libro(nombre=nombre_libro, autor=autor, pais=pais_libro)
-
-        self._guardar_libro(nuevo_libro)
-
-    def _verificar_existencia_autor(self, nombre_autor) -> bool:
+    def verificar_existencia_autor(self, nombre_autor) -> bool:
         """
         Está función revisa si el nombre del autor se encuentra en la lista _autores
         y en caso de que no lo esté pide registrarlo
 
         """
         for autor in self._autores:
-            if nombre_autor.lower() == autor.get_nombre().lower():
+            if nombre_autor.title() == autor.get_nombre().title():
                 return True
         return False
 
     def _get_autor(self, nombre_autor) -> Autor:
         """
-        Dado un nombre busca un autor en selkf._autores y lo retorna como una Autor
+        Dado un nombre busca un autor en self._autores y lo retorna como un Autor
         """
         # autor_encontrado = None
         # for autor in self._autores:
@@ -87,6 +65,9 @@ class Biblioteca:
             None
 
     def _crear_autor(self, nombre):
+        """
+        Esta función crea un autor y llamaba la función para guardarlo
+        """
         autor = Autor(nombre=nombre)
         self._guardar_autor(autor)
         return autor
@@ -111,6 +92,9 @@ class Biblioteca:
                 pickle.dump(self._autores, archivo_autores)
 
     def _guardar_autor(self, autor: Autor):
+        """
+        Esta función guarda al autor en el repositorio
+        """
         self._autores.append(autor)
         self._guardar_autores_repo()
 
@@ -121,6 +105,28 @@ class Biblioteca:
         """
         with open(self._ruta_autores, "wb") as archivo:
             pickle.dump(self._autores, archivo)
+
+    def registrar_libro(self):
+        """
+        esta funcion puede ser llamada para crear un nuevo libro
+        y en caso de que el autor no este registrado, crearlo
+
+        """
+        nombre_autor = input('Pon el nombre del autor ')
+
+        autor_existe = self.verificar_existencia_autor(nombre_autor)
+
+        if autor_existe:
+            autor = self._get_autor(nombre_autor)
+        else:
+            autor = self._crear_autor(nombre_autor)
+
+        nombre_libro = input("Ingresa el nombre del Libro: ")
+        pais_libro = input("Ingresa el Pais del Libro: ")
+
+        nuevo_libro = Libro(nombre=nombre_libro, autor=autor, pais=pais_libro)
+
+        self._guardar_libro(nuevo_libro)
 
     def _cargar_libros(self):
         """"
@@ -143,17 +149,41 @@ class Biblioteca:
                 pickle.dump(self._libros, archivo_libros)
 
     def _guardar_libro(self, libro: Libro):
+        """
+        Esta función guarda los libros creados en la lista libros y además los guarda directamente
+        en el repositorio
+        """
         self._libros.append(libro)
         self._guardar_libros_repo()
 
     def _guardar_libros_repo(self):
+        """
+        Esta función guarda los libros en el repositorio
+        :return:
+        """
         with open(self._ruta_libros, "wb") as archivo:
             pickle.dump(self._libros, archivo)
 
-    def buscar_libro_por_autor(self, nombre_autor):
+    def mostrar_libros(self):
         """
+        Esta función muestra todos los libro almacenados en la lista: _libros
 
+        """
+        print('-' * 100)
+        print('Libros de la Biblioteca : ')
 
+        if self._libros:
+            deque(map(print, self._libros))
+            # print(self._libros)
+        else:
+            print("No hay libros en la Biblioteca")
+
+        print('-' * 100)
+        print('-' * 100)
+
+    def buscar_libro_por_autor(self, nombre_autor) -> Estudiante:
+        """
+        Esta función busca todos los libros que hallan por nombre del mismo autor
         """
         nombre_autor.title()
         for i in self._libros:
@@ -191,6 +221,42 @@ class Biblioteca:
                 self._estudiantes = []
                 pickle.dump(self._estudiantes, archivo_estudiantes)
 
+    def registar_estudiante(self, nombre_estudiante):
+        nombre_estudiante.title()
+        self._guardar_estudiante(nombre_estudiante)
+
+    def _guardar_estudiante(self, estudiante):
+        """
+        Esta función guarda a los estudiantes en el repositorio
+        """
+        self._estudiantes.append(estudiante)
+        self._guardar_estudiante_repo()
+
+    def _guardar_estudiante_repo(self):
+        """
+        Está función guarda a los estudiantes en el repositorio
+        """
+        with open(self._ruta_estudiantes, "wb") as archivo:
+            pickle.dump(self._estudiantes, archivo)
+
+    def buscar_estudiante(self, id_del_estudiante):
+        """
+        Está función busca la Id de un estudiante en la lista _estudiantes
+        """
+        for i in self._estudiantes:
+            if i._id == id_del_estudiante:
+                print(f"{i.__str__}")
+        pass
+
+    #  def cofirmar_estudiante(self,nombre_estudiante) -> Estudiante:
+    #
+    #
+    #       if estudiantes:
+    #          return estudiantes[0]
+    #
+    #        else:
+    #            None
+
     def _cargar_prestados(self):
         """"
         Carga los libros que están prestados en la siguiente lista
@@ -209,25 +275,6 @@ class Biblioteca:
             with open(Biblioteca._ruta_prestados, "wb") as archivo_prestados:
                 self._libros_prestados = []
                 pickle.dump(self._libros_prestados, archivo_prestados)
-
-    def _cargar_prestamos(self):
-        pass
-
-    def mostrar_libros(self):
-        """
-
-        """
-        print('-' * 100)
-        print('Libros de la Biblioteca : ')
-
-        if self._libros:
-            deque(map(print, self._libros))
-            # print(self._libros)
-        else:
-            print("No hay libros en la Biblioteca")
-
-        print('-' * 100)
-        print('-' * 100)
 
     def __str__(self):
         return f"Biblioteca(nombre: {self._nombre}, nro_libros: {len(self._libros)})"
