@@ -42,12 +42,12 @@ def menu():
             biblioteca.registar_estudiante()
         elif seleccionar == 3:
             libro_buscar= input('pon el nombre del autor')
-            biblioteca.buscar_libro_por_id(libro_buscar)
+            biblioteca.buscar_libro_por_nombre(libro_buscar)
         elif seleccionar == 4:
              autores_filtrar = input('pon el nombre del autor')
              biblioteca.bucar_libro_por_autor(autores_filtrar)
-        # elif seleccionar == 5:
-        #     biblioteca.()
+         elif seleccionar == 5:
+             biblioteca.()
         # elif seleccionar ==
         elif seleccionar == 7:
             biblioteca.mostrar_libros()

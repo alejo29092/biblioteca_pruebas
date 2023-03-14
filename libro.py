@@ -20,7 +20,7 @@ class Libro:
         self._id = Libro._seq_Libro
         self._nombre = nombre.title()
         self._pais = pais.title()
-        self._autor = autor
+        self._autor = autor.title()
 
     def __str__(self):
         return f'Libro(Nombre: {self._nombre}\n\tPais: {self._pais}\n\tAutor: {self._autor.get_nombre()}\n\tId: {self._id})'

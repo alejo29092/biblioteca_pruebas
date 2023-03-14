@@ -36,17 +36,6 @@ class Biblioteca:
     def get_nombre(self):
         return self._nombre
 
-    def buscar_libro_por_nombre(self, nombre: str):
-        """
-        Retorna un libro si lo encuentra en repositorio de la Biblioteca usando el nombre para buscarlo
-        :param: nombre: str, string que contiene nombre del librop para ser bucado
-        :return: Libro si el libro existe de lo contrario None
-        """
-        pass
-
-
-
-
     def registrar_libro(self):
         """
         esta funcion puede ser llamada para crear un nuevo libro
@@ -161,18 +150,26 @@ class Biblioteca:
         with open(self._ruta_libros, "wb") as archivo:
             pickle.dump(self._libros, archivo)
 
-
-    def buscar_libro_por_autor(self, nombre_autor)->Libro:
+    def buscar_libro_por_autor(self, nombre_autor):
         """
+
 
         """
         nombre_autor.title()
         for i in self._libros:
-            if nombre_autor == Libro._autor:
-                print(f"{Libro._nombre},")
+            if i._autor == nombre_autor:
+                print(f"{i.__str__}")
 
-
-
+    def buscar_libro_por_nombre(self, nombre_libro):
+        """
+        Retorna un libro si lo encuentra en repositorio de la Biblioteca usando el nombre para buscarlo
+        :param: nombre: str, string que contiene nombre del librop para ser bucado
+        :return: Libro si el libro existe de lo contrario None
+        """
+        nombre_libro.title()
+        for i in self._libros:
+            if i._nombre == nombre_libro:
+                print(f"{i.__str__}")
 
     def _cargar_estudiantes(self):
         """"
