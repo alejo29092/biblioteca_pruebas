@@ -5,7 +5,7 @@ from autor import Autor
 class Libro:
     _seq_Libro = 1000
 
-    def __init__(self, nombre: str, pais: str, autor: Autor):
+    def __init__(self, nombre: str, pais: str, autor: Autor, cantidad:int):
         """
         Crea un libro en donde se crean las siguientes variables
         _nombre : es el nombre del libro.
@@ -21,9 +21,11 @@ class Libro:
         self._nombre = nombre.title()
         self._pais = pais.title()
         self._autor = autor.title()
+        self._cantidad= cantidad
 
     def __str__(self):
-        return f'Libro(Nombre: {self._nombre}\n\tPais: {self._pais}\n\tAutor: {self._autor.get_nombre()}\n\tId: {self._id})'
+        return f'Libro(Nombre: {self._nombre}\n\tPais: {self._pais}\n\tAutor: {self._autor.get_nombre()}\n\tId: {self._id}' \
+               f'\n\tCantidad: {self._cantidad})'
 
     # ArchivoId = open( self.Ruta, "ab+")
     # ArchivoId.seek(0)

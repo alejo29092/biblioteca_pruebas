@@ -15,6 +15,7 @@ class Prestamos:
         LibrosPrestamo = list()
         self._libro =libro
         self._estudiante = estudiante
+        libro_cantidad = 1
         LibrosPrestamo.append(self)
         
     def getEstudiante (self):

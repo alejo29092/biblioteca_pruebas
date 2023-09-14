@@ -55,9 +55,6 @@ def menu():
 
         elif seleccionar == 7:
             biblioteca.mostrar_libros()
-
-        # elif seleccionar == 7:
-        #     biblioteca.()
         # elif seleccionar == 8:
         # biblioteca.()
         # elif seleccionar == 9:

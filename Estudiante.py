@@ -14,6 +14,7 @@ class Estudiante:
         self._seq_Libro += 1
         self._nombre = nombre.title()
 
+
     def get_nombre_estudiante(self):
         return self._nombre
 

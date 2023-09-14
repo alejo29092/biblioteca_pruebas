@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 """
 Created on Mon Feb 20 12:40:14 2023
 
@@ -31,7 +31,7 @@ class Biblioteca:
         self._cargar_autores()
         self._cargar_libros()
         self._cargar_estudiantes()
-        self._cargar_prestamos()
+        self._cargar_prestados()
 
     def get_nombre(self):
         return self._nombre
@@ -110,7 +110,6 @@ class Biblioteca:
         """
         esta funcion puede ser llamada para crear un nuevo libro
         y en caso de que el autor no este registrado, crearlo
-
         """
         nombre_autor = input('Pon el nombre del autor ')
 
@@ -123,8 +122,9 @@ class Biblioteca:
 
         nombre_libro = input("Ingresa el nombre del Libro: ")
         pais_libro = input("Ingresa el Pais del Libro: ")
+        libros_cantidad= input("ponga rl numro de libros existentes")
 
-        nuevo_libro = Libro(nombre=nombre_libro, autor=autor, pais=pais_libro)
+        nuevo_libro = Libro(nombre=nombre_libro, autor=autor, pais=pais_libro, cantidad=libros_cantidad)
 
         self._guardar_libro(nuevo_libro)
 
